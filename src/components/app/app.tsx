@@ -1,12 +1,15 @@
 import MainPage from '../../pages/main-page/main-page';
+import { MainPageProps } from '../../pages/main-page/main-page';
 
-type AppProps = {
-  offersCount: number;
-}
+// function App({offersCount}: MainPageProps): JSX.Element {
+//   return (
+//     <MainPage offersCount={offersCount}/>
+//   );
+// }
 
-function App({offersCount}: AppProps): JSX.Element {
+function App(props: MainPageProps): JSX.Element {
   return (
-    <MainPage offersCount={offersCount}/>
+    <MainPage {...props}/>
   );
 }
 

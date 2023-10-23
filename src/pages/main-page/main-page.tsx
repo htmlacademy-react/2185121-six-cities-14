@@ -1,18 +1,10 @@
 import Card from '../../components/card/card';
 
-type MainPageProps = {
+export type MainPageProps = {
   offersCount: number;
 }
 
 function MainPage ({offersCount}: MainPageProps): JSX.Element {
-  function getCards() {
-    const cards = [];
-    for (let i: number = 0; i < offersCount; i++) {
-      cards.push(<Card key={i} />);
-    }
-    return cards;
-  }
-
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -103,7 +95,8 @@ function MainPage ({offersCount}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {getCards().map((el) => el)}
+                {Array.from({length: offersCount}).map((_, index) => <Card key ={index} />)}
+                {/* {Array.from({length: offersCount}, (_, index) => <Card key={index}/>)}В */}
               </div>
             </section>
             <div className="cities__right-section">
