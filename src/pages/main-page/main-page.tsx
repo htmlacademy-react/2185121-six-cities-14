@@ -1,12 +1,16 @@
 import Card from '../../components/card/card';
+import { Helmet } from 'react-helmet-async';
 
 export type MainPageProps = {
   offersCount: number;
 }
 
-function MainPage ({offersCount}: MainPageProps): JSX.Element {
+function MainPage({ offersCount }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -95,7 +99,7 @@ function MainPage ({offersCount}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Array.from({length: offersCount}).map((_, index) => <Card key ={index} />)}
+                {Array.from({ length: offersCount }).map((_, index) => <Card key={index} />)}
                 {/* {Array.from({length: offersCount}, (_, index) => <Card key={index}/>)}В */}
               </div>
             </section>
