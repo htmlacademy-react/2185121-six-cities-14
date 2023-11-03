@@ -10,30 +10,30 @@ import { AppRoute, AuthorizationStatus } from '../../common/const';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 
-function App(props: MainPageProps): JSX.Element {
+function App({ offers }: MainPageProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage {...props} />}
+            element={<MainPage offers={offers} />}
           />
           <Route
             path={AppRoute.Login}
             element={<LoginPage />}
           />
           <Route
-            path={AppRoute.Offer}
-            element={<OfferPage />}
+            path={`${AppRoute.Offer}/:offerId`}
+            element={<OfferPage offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritePage />
+                <FavoritePage offers={offers} />
               </PrivateRoute>
             }
           />
