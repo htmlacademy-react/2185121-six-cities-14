@@ -58,7 +58,9 @@ function OfferPage({ offers }: OfferPageProps) {
       </header>
       <main className="page__main page__main--offer">
         <section className="offer">
+
           <OfferDetails offer={offer} />
+
           <section className="offer__map map" />
         </section>
         <div className="container">

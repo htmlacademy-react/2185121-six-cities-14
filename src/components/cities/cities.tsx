@@ -1,11 +1,18 @@
 import { OfferType } from '../../types/offer';
 import Card from '../../components/card/card';
+import { useState } from 'react';
 
 type CitiesPageProps = {
   offers: OfferType[];
 }
 
 function Cities({ offers }: CitiesPageProps) {
+  const [hoveredOfferId, setHoveredOfferId] = useState<OfferType['id'] | null>(null);
+
+  function handleCardHover(offerId: OfferType['id'] | null) {
+    setHoveredOfferId(offerId);
+  }
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -29,7 +36,7 @@ function Cities({ offers }: CitiesPageProps) {
           </form>
           <div className="cities__places-list places__list tabs__content">
             {offers.map((offer) => (
-              <Card key={offer.id} offer={offer} />
+              <Card key={offer.id} offer={offer} onCardHover={handleCardHover} />
             ))}
           </div>
         </section>
