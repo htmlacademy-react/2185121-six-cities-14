@@ -2,11 +2,11 @@ import { OfferType } from '../../types/offer';
 import Card from '../../components/card/card';
 import { useState } from 'react';
 
-type CitiesPageProps = {
+type CitiesProps = {
   offers: OfferType[];
 }
 
-function Cities({ offers }: CitiesPageProps) {
+function Cities({ offers }: CitiesProps) {
   const [hoveredOfferId, setHoveredOfferId] = useState<OfferType['id'] | null>(null);
 
   function handleCardHover(offerId: OfferType['id'] | null) {

@@ -5,7 +5,7 @@ import { capitalize, getRatingWidth } from '../../common/common';
 
 type CardProps = {
   offer: OfferType;
-  onCardHover: (offerId: OfferType['id'] | null) => void;
+  onCardHover?: (offerId: OfferType['id'] | null) => void;
 }
 
 function Card({ offer, onCardHover }: CardProps) {
