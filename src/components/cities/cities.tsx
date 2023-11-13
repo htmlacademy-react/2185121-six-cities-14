@@ -1,6 +1,8 @@
 import { OfferType } from '../../types/offer';
 import Card from '../../components/card/card';
 import { useState } from 'react';
+import Map from '../map/map';
+import { CitiesLocation } from '../../common/const';
 
 type CitiesProps = {
   offers: OfferType[];
@@ -8,6 +10,7 @@ type CitiesProps = {
 
 function Cities({ offers }: CitiesProps) {
   const [hoveredOfferId, setHoveredOfferId] = useState<OfferType['id'] | null>(null);
+  const activeCity = CitiesLocation.Amsterdam;
 
   function handleCardHover(offerId: OfferType['id'] | null) {
     setHoveredOfferId(offerId);
@@ -41,7 +44,14 @@ function Cities({ offers }: CitiesProps) {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <section className="cities__map map">
+            <Map
+              location={activeCity.location}
+              block='cities'
+              offers={offers}
+              specialOfferId={hoveredOfferId}
+            />
+          </section>
         </div>
       </div>
     </div>
