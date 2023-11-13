@@ -1,5 +1,3 @@
-// export const OFFERS_COUNT = 5;
-
 export const MAX_RATING = 5;
 
 export const MIN_COMMENT_LENGTH = 50;
@@ -27,3 +25,29 @@ export enum CityName {
   Hamburg = 'Hamburg',
   Dusseldorf = 'Dusseldorf',
 }
+
+export const CitiesLocation = {
+  Paris: {
+    name: 'Paris',
+  },
+  Cologne: {
+    name: 'Cologne',
+  },
+  Brussels: {
+    name: 'Brussels',
+  },
+  Amsterdam: {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.3676,
+      longitude: 4.9041,
+      zoom: 12,
+    }
+  },
+  Hamburg: {
+    name: 'Hamburg',
+  },
+  Dusseldorf: {
+    name: 'Dusseldorf',
+  }
+};
