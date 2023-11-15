@@ -39,7 +39,7 @@ function Cities({ offers }: CitiesProps) {
           </form>
           <div className="cities__places-list places__list tabs__content">
             {offers.map((offer) => (
-              <Card key={offer.id} offer={offer} onCardHover={handleCardHover} />
+              <Card key={offer.id} block='cities' offer={offer} onCardHover={handleCardHover} />
             ))}
           </div>
         </section>
