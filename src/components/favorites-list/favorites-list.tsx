@@ -1,6 +1,6 @@
 import { OfferType } from '../../types/offer';
-import FavoritesCard from '../favorites-card/favorites-card';
 import { CityName } from '../../common/const';
+import Card from '../card/card';
 
 type FavoritesListProps = {
   offers: OfferType[];
@@ -27,7 +27,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersAmsterdam.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersAmsterdam.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}
@@ -43,7 +43,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersBrussels.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersBrussels.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}
@@ -59,7 +59,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersCologne.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersCologne.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}
@@ -75,7 +75,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersDusseldorf.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersDusseldorf.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}
@@ -91,7 +91,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersHamburg.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersHamburg.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}
@@ -107,7 +107,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
             </div>
           </div>
           <div className="favorites__places">
-            {offersParis.map((offer) => <FavoritesCard key={offer.id} offer={offer} />)}
+            {offersParis.map((offer) => <Card key={offer.id} block='favorites' size='small' offer={offer} />)}
           </div>
         </li>
       )}

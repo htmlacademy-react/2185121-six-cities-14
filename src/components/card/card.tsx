@@ -3,13 +3,22 @@ import { AppRoute } from '../../common/const';
 import { OfferType } from '../../types/offer';
 import { capitalize, getRatingWidth } from '../../common/common';
 
+type CardImageSize = 'small' | 'large';
+
 type CardProps = {
   offer: OfferType;
+  block?: string;
+  size?: CardImageSize;
   onCardHover?: (offerId: OfferType['id'] | null) => void;
 }
 
-function Card({ offer, onCardHover }: CardProps) {
-  const { isPremium, price, previewImage, id, title, type, rating } = offer;
+const sizeCard: Record<CardImageSize, { width: string; height: string }> = {
+  small: { width: '150', height: '110' },
+  large: { width: '260', height: '200' },
+};
+
+function Card({ offer, block, size = 'large', onCardHover }: CardProps) {
+  const { isPremium, price, previewImage, id, title, type, rating, isFavorite } = offer;
 
   function handleMouseEnter() {
     onCardHover?.(id);
@@ -21,21 +30,22 @@ function Card({ offer, onCardHover }: CardProps) {
 
   return (
     <article
-      className="cities__card place-card"
+      className={`${block}__card place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={isPremium ? 'place-card__mark' : 'visually-hidden'} >
-        <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={260}
-            height={200}
             alt={title}
+            {...sizeCard[size]}
           />
         </Link>
       </div>
@@ -45,7 +55,8 @@ function Card({ offer, onCardHover }: CardProps) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          {/* исправить класс через cn */}
+          <button className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : null}`} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>

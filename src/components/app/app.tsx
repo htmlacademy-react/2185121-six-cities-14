@@ -4,13 +4,19 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritePage from '../../pages/favorites-page/favorite-page';
 
-import { MainPageProps } from '../../pages/main-page/main-page';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../common/const';
+import { ReviewType } from '../../types/review';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { OfferType } from '../../types/offer';
 
-function App({ offers }: MainPageProps): JSX.Element {
+type AppProps = {
+  offers: OfferType[];
+  reviews: ReviewType[];
+}
+
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -25,7 +31,12 @@ function App({ offers }: MainPageProps): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}/:offerId`}
-            element={<OfferPage offers={offers} />}
+            element={
+              <OfferPage
+                offers={offers}
+                reviews={reviews}
+              />
+            }
           />
           <Route
             path={AppRoute.Favorites}
