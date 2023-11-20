@@ -83,7 +83,7 @@ export const offers: OfferType[] = [
     title: 'House in countryside',
     isFavorite: false,
     isPremium: false,
-    rating: 2.8,
+    rating: 4.7,
     type: 'room',
     bedrooms: 1,
     maxAdults: 2,

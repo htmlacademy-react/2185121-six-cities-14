@@ -3,6 +3,7 @@ import Card from '../../components/card/card';
 import { useState } from 'react';
 import Map from '../map/map';
 import { CitiesLocation } from '../../common/const';
+import { useAppSelector } from '../../hooks';
 
 type CitiesProps = {
   offers: OfferType[];
@@ -11,6 +12,8 @@ type CitiesProps = {
 function Cities({ offers }: CitiesProps) {
   const [hoveredOfferId, setHoveredOfferId] = useState<OfferType['id'] | null>(null);
   const activeCity = CitiesLocation.Amsterdam;
+  const currentCity = useAppSelector((state) => state.activeCity);
+  const currentOffers = useAppSelector((state) => state.currentOffers);
 
   function handleCardHover(offerId: OfferType['id'] | null) {
     setHoveredOfferId(offerId);
@@ -21,7 +24,7 @@ function Cities({ offers }: CitiesProps) {
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+          <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by</span>
             <span className="places__sorting-type" tabIndex={0}>
@@ -38,7 +41,7 @@ function Cities({ offers }: CitiesProps) {
             </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
-            {offers.map((offer) => (
+            {currentOffers.map((offer) => (
               <Card key={offer.id} block='cities' offer={offer} onCardHover={handleCardHover} />
             ))}
           </div>
@@ -48,6 +51,7 @@ function Cities({ offers }: CitiesProps) {
             <Map
               location={activeCity.location}
               block='cities'
+              // Поменять на currentOffers
               offers={offers}
               specialOfferId={hoveredOfferId}
             />
