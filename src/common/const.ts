@@ -28,6 +28,13 @@ export enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+export const SortingMap = {
+  Popular: 'Popular',
+  LowToHigh: 'Price: low to high',
+  HightToLow: 'Price: high to low',
+  TopRated: 'Top rated first',
+} as const;
+
 export const CitiesLocation = {
   Paris: {
     name: 'Paris',
