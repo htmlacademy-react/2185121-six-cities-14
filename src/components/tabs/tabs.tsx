@@ -1,11 +1,10 @@
 import './tabs-style.css';
-import { CityName } from '../../common/const';
+import { cityNames } from '../../common/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { cityChange } from '../../store/action';
 
 
 function Tabs() {
-  const cities = Object.keys(CityName);
 
   const currentCity = useAppSelector((state) => state.activeCity);
 
@@ -15,7 +14,7 @@ function Tabs() {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => {
+          {cityNames.map((city) => {
             const classList = city === currentCity ? 'locations__item-link tabs__item locations__item-button tabs__item--active' : 'locations__item-link tabs__item locations__item-button';
             return (
               <li className="locations__item" key={city}>
