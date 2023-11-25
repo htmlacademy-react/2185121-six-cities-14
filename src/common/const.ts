@@ -19,14 +19,16 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf',
-}
+export const cityNames = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+] as const;
+
+export type TCityName = typeof cityNames[number];
 
 export const SortingMap = {
   Popular: 'Popular',

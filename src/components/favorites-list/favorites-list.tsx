@@ -1,5 +1,4 @@
 import { OfferType } from '../../types/offer';
-import { CityName } from '../../common/const';
 import Card from '../card/card';
 
 type FavoritesListProps = {
@@ -7,12 +6,12 @@ type FavoritesListProps = {
 }
 
 function FavoritesList({ offers }: FavoritesListProps) {
-  const offersAmsterdam = offers.filter((offer) => offer.city.name === CityName.Amsterdam);
-  const offersBrussels = offers.filter((offer) => offer.city.name === CityName.Brussels);
-  const offersCologne = offers.filter((offer) => offer.city.name === CityName.Cologne);
-  const offersDusseldorf = offers.filter((offer) => offer.city.name === CityName.Dusseldorf);
-  const offersHamburg = offers.filter((offer) => offer.city.name === CityName.Hamburg);
-  const offersParis = offers.filter((offer) => offer.city.name === CityName.Paris);
+  const offersAmsterdam = offers.filter((offer) => offer.city.name === 'Amsterdam');
+  const offersBrussels = offers.filter((offer) => offer.city.name === 'Brussels');
+  const offersCologne = offers.filter((offer) => offer.city.name === 'Cologne');
+  const offersDusseldorf = offers.filter((offer) => offer.city.name === 'Dusseldorf');
+  const offersHamburg = offers.filter((offer) => offer.city.name === 'Hamburg');
+  const offersParis = offers.filter((offer) => offer.city.name === 'Paris');
   return (
     <ul className="favorites__list">
 
@@ -22,7 +21,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Amsterdam}</span>
+                <span>{'Amsterdam'}</span>
               </a>
             </div>
           </div>
@@ -38,7 +37,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Brussels}</span>
+                <span>{'Brussels'}</span>
               </a>
             </div>
           </div>
@@ -54,7 +53,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Cologne}</span>
+                <span>{'Cologne'}</span>
               </a>
             </div>
           </div>
@@ -70,7 +69,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Dusseldorf}</span>
+                <span>{'Dusseldorf'}</span>
               </a>
             </div>
           </div>
@@ -86,7 +85,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Hamburg}</span>
+                <span>{'Hamburg'}</span>
               </a>
             </div>
           </div>
@@ -102,7 +101,7 @@ function FavoritesList({ offers }: FavoritesListProps) {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{CityName.Paris}</span>
+                <span>{'Paris'}</span>
               </a>
             </div>
           </div>

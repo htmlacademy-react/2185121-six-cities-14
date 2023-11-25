@@ -6,6 +6,7 @@ import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
 
+// store.dispatch(fetchOffers(offers)); заглушка для фечей
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
