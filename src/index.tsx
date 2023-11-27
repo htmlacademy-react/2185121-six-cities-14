@@ -5,8 +5,9 @@ import { Provider } from 'react-redux/es/exports';
 import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
+import { fetchOffersAction } from './api-actions/api-actions';
 
-// store.dispatch(fetchOffers(offers)); заглушка для фечей
+store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
