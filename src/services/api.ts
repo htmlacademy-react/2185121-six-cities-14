@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, {AxiosInstance, InternalAxiosRequestConfig} from 'axios';
 import { BASE_URL, REQUEST_TIMEOUT } from '../common/const';
 import { getToken } from './token';
 
@@ -9,7 +9,7 @@ export const createAPI = (): AxiosInstance => {
   });
 
   api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig) => {
       const token = getToken();
 
       if (token && config.headers) {
