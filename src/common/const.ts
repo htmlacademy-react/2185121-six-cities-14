@@ -5,12 +5,21 @@ export const MAX_COMMENT_LENGTH = 300;
 export const MAX_REVIEWS_COUNT = 10;
 export const MAX_NEAR_PLACES_COUNT = 3;
 
+export const BASE_URL = 'https://14.design.pages.academy/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
   NotFound = '*'
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {

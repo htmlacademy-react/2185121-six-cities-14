@@ -3,20 +3,34 @@ import { OfferHost } from './offer-host';
 import { OfferLocation } from './offer-location';
 
 export type OfferType = {
-  bedrooms: number;
+  id: number;
+  title: string;
+  type: string;
+  price: number;
+  previewImage: string;
   city: OfferCity;
+  location: OfferLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+
+  bedrooms: number;
   description: string;
   goods: string[];
   host: OfferHost;
-  id: number;
   images: string[];
-  isFavorite: boolean;
-  isPremium: boolean;
-  location: OfferLocation;
   maxAdults: number;
-  previewImage: string;
-  price: number;
-  rating: number;
+};
+
+export type OfferPrevType = {
+  id: number;
   title: string;
   type: string;
+  price: number;
+  previewImage: string;
+  city: OfferCity;
+  location: OfferLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
 };
