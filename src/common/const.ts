@@ -7,6 +7,7 @@ export const MAX_NEAR_PLACES_COUNT = 3;
 
 export const BASE_URL = 'https://14.design.pages.academy/six-cities';
 export const REQUEST_TIMEOUT = 5000;
+export const TIMEOUT_SHOW_ERROR = 2000;
 
 export enum AppRoute {
   Main = '/',
@@ -19,6 +20,7 @@ export enum AppRoute {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
+  Favorites = '/favorite',
   Logout = '/logout',
 }
 
