@@ -5,7 +5,8 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritePage from '../../pages/favorites-page/favorite-page';
 
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../common/const';
+import { AppRoute } from '../../common/const';
+import { useAppSelector } from '../../hooks';
 import { ReviewType } from '../../types/review';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
@@ -17,6 +18,7 @@ type AppProps = {
 }
 
 function App({ offers, reviews }: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -42,7 +44,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <FavoritePage offers={offers} />
               </PrivateRoute>
