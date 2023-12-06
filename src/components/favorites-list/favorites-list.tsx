@@ -1,8 +1,8 @@
-import { OfferType } from '../../types/offer';
+import { OfferPrevType } from '../../types/offer';
 import Card from '../card/card';
 
 type FavoritesListProps = {
-  offers: OfferType[];
+  offers: OfferPrevType[];
 }
 
 function FavoritesList({ offers }: FavoritesListProps) {

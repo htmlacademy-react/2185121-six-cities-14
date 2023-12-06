@@ -1,25 +1,24 @@
 import ReviewForm from '../review-form/review-form';
-import Review from '../review/review';
-import { ReviewType } from '../../types/review';
-import { MAX_REVIEWS_COUNT } from '../../common/const';
+import { ReviewType, ReviewSendType } from '../../types/review';
+import { AuthorizationStatus } from '../../common/const';
+import { useAppSelector } from '../../hooks';
+import CommentsList from '../comments-list/comments-list';
 
 type ReviewListProps = {
   reviews: ReviewType[];
+  sendComment:(review: ReviewSendType) => void;
 }
 
-function ReviewsList({reviews}: ReviewListProps) {
+function ReviewsList({reviews, sendComment}: ReviewListProps) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
-      <ul className="reviews__list">
-        {reviews.slice(0, MAX_REVIEWS_COUNT).map((review) => (
-          <Review key={review.id} review={review} />
-        ))}
-      </ul>
+      <CommentsList reviews={reviews}/>
 
-      < ReviewForm />
+      {authorizationStatus === AuthorizationStatus.Auth && < ReviewForm sendComment={sendComment} />}
 
     </section>
   );

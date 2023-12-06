@@ -10,6 +10,7 @@ function Header() {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const userInfo: TUserData = useAppSelector((state) => state.userInfo);
+  const favoriteOffers = useAppSelector((state) => state.favoritesOffers);
 
   const handleLogoutClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
@@ -27,13 +28,13 @@ function Header() {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                       <img src={userInfo.avatarUrl} />
                     </div>
                     <span className="header__user-name user__name">{userInfo.email}</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" onClick={handleLogoutClick}>

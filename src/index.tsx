@@ -4,12 +4,12 @@ import App from './components/app/app';
 import { Provider } from 'react-redux/es/exports';
 import { offers } from './mocks/offers';
 import ErrorMessage from './components/error-message/error-message';
-import { reviews } from './mocks/reviews';
 import { store } from './store';
-import { fetchOffersAction, checkAuthAction } from './api-actions/api-actions';
+import { fetchOffersAction, checkAuthAction , fetchOffersFavoriteAction} from './api-actions/api-actions';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersFavoriteAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,7 +21,6 @@ root.render(
       <ErrorMessage />
       <App
         offers={offers}
-        reviews={reviews}
       />
     </Provider>
   </React.StrictMode>

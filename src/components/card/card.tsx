@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../common/const';
-import { OfferType } from '../../types/offer';
+import { OfferPrevType } from '../../types/offer';
 import { capitalize, getRatingWidth } from '../../common/common';
 
 type CardImageSize = 'small' | 'large';
 
 type CardProps = {
-  offer: OfferType;
+  offer: OfferPrevType;
   block?: string;
   size?: CardImageSize;
-  onCardHover?: (offerId: OfferType['id'] | null) => void;
+  onCardHover?: (offerId: OfferPrevType['id'] | null) => void;
 }
 
 const sizeCard: Record<CardImageSize, { width: string; height: string }> = {

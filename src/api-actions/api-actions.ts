@@ -1,23 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { TState, TAppDispatch } from '../types/state';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../common/const';
-import { loadOffers, requireAuthorization, serverError, userInfo } from '../store/action';
-import { OfferPrevType } from '../types/offer'; //доделать норм типизацию
+import { APIRoute, AuthorizationStatus} from '../common/const';
+import { loadOffers, requireAuthorization, userInfo, offerInfoLoading, offersLoading, loadFavoriteOffers } from '../store/action';
+import { OfferPrevType, TOfferInfo } from '../types/offer'; //доделать норм типизацию
 import { AuthData } from '../types/auth-data';
 import { TUserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
-import { store } from '../store';
 
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout (
-      () => store.dispatch(serverError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-); //еще не решил оставить или сверх код
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
@@ -26,9 +16,42 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<OfferPrevType[]>(APIRoute.Offers);
-    dispatch(loadOffers(data));
+    try {
+      const {data} = await api.get<OfferPrevType[]>(APIRoute.Offers);
+      dispatch(loadOffers(data));
+    } catch {
+      dispatch(offersLoading(true));
+    }
   }
+);
+
+export const fetchOffersFavoriteAction = createAsyncThunk<void, undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<OfferPrevType[]>(APIRoute.Favorites);
+      dispatch(loadFavoriteOffers(data));
+    } catch {
+      dispatch(offersLoading(true));// переделать под избранные офферы
+    }
+  }
+);
+
+export const fetchOfferInfoAction = createAsyncThunk<void, undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOfferInfo',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(offersLoading(true)); // начинаем загрузку
+    const {data} = await api.get<TOfferInfo>(APIRoute.Offers);
+    dispatch(offerInfoLoading(data));
+  },
 );
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {

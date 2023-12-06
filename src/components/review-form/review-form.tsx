@@ -1,24 +1,50 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useRef, FormEvent, useMemo } from 'react';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../common/const';
+import { ReviewSendType } from '../../types/review';
 
-function ReviewForm() {
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState('');
-  const isValid =
-    comment.length >= MIN_COMMENT_LENGTH &&
-    comment.length <= MAX_COMMENT_LENGTH &&
-    rating !== '';
+type ReviewFormProps = {
+  sendComment: (review: ReviewSendType) => void;
+}
 
-  function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>) {
-    setComment(evt.target.value);
-  }
+function ReviewForm({ sendComment }: ReviewFormProps) {
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
-    setRating(evt.target.value);
-  }
+  const emptyReview: ReviewSendType = {
+    rating: 0,
+    comment: '',
+  };
+
+  const [formData, setFormData] = useState(emptyReview);
+
+  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: Number(value) });
+  };
+
+  const handleFieldTextareaChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    sendComment(formData);
+    setFormData(emptyReview);
+  };
+
+  const isFormValid = useMemo(
+    () => formData.rating > 0 && formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH,
+    [formData]);
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      ref={formRef}
+      className="reviews__form form"
+      action="#"
+      method="post"
+      id="create-course-form"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -26,10 +52,10 @@ function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={5}
+          value={5}
           id="5-stars"
           type="radio"
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
         />
         <label
           htmlFor="5-stars"
@@ -43,10 +69,10 @@ function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={4}
+          value={4}
           id="4-stars"
           type="radio"
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
         />
         <label
           htmlFor="4-stars"
@@ -60,10 +86,10 @@ function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={3}
+          value={3}
           id="3-stars"
           type="radio"
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
         />
         <label
           htmlFor="3-stars"
@@ -77,10 +103,10 @@ function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={2}
+          value={2}
           id="2-stars"
           type="radio"
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
         />
         <label
           htmlFor="2-stars"
@@ -94,10 +120,10 @@ function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={1}
+          value={1}
           id="1-star"
           type="radio"
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
         />
         <label
           htmlFor="1-star"
@@ -111,12 +137,11 @@ function ReviewForm() {
       </div>
       <textarea
         className="reviews__textarea form__textarea"
-        id="review"
-        name="review"
+        id="comment"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={''}
-        value={comment}
-        onChange={handleTextareaChange}
+        value={formData.comment}
+        onChange={handleFieldTextareaChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -128,7 +153,7 @@ function ReviewForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid}
+          disabled={!isFormValid}
         >
           Submit
         </button>

@@ -1,14 +1,15 @@
-import { OfferType } from '../../types/offer';
+import { TOfferInfo } from '../../types/offer';
 import { capitalize, getRatingWidth } from '../../common/common';
 import ReviewsList from '../reviews-list/review-list';
-import { ReviewType } from '../../types/review';
+import { ReviewType, ReviewSendType } from '../../types/review';
 
 type OfferDetailsProps = {
-  offer: OfferType;
+  offer: TOfferInfo;
   reviews: ReviewType[];
+  sendComment:(review: ReviewSendType) => void;
 }
 
-function OfferDetails({ offer, reviews }: OfferDetailsProps) {
+function OfferDetails({ offer, reviews, sendComment }: OfferDetailsProps) {
   const {
     images,
     description,
@@ -100,7 +101,7 @@ function OfferDetails({ offer, reviews }: OfferDetailsProps) {
             </div>
           </div>
 
-          <ReviewsList reviews={reviews} />
+          <ReviewsList reviews={reviews} sendComment={sendComment} />
         </div>
       </div>
     </>
