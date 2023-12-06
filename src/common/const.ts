@@ -2,8 +2,8 @@ export const MAX_RATING = 5;
 
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
-export const MAX_REVIEWS_COUNT = 10;
 export const MAX_NEAR_PLACES_COUNT = 3;
+export const ERROR_STATUS_CODE = 404;
 
 export const BASE_URL = 'https://14.design.pages.academy/six-cities';
 export const REQUEST_TIMEOUT = 5000;
@@ -21,6 +21,7 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Favorites = '/favorite',
+  Comments = '/comments',
   Logout = '/logout',
 }
 
@@ -48,7 +49,7 @@ export const SortingMap = {
   TopRated: 'Top rated first',
 } as const;
 
-export const CitiesLocation = {
+export const CitiesLocation = { // удалить
   Paris: {
     name: 'Paris',
   },

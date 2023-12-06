@@ -23,7 +23,7 @@ export type OfferType = {
 };
 
 export type OfferPrevType = {
-  id: number;
+  id: string;
   title: string;
   type: string;
   price: number;
@@ -33,4 +33,23 @@ export type OfferPrevType = {
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
+};
+
+export type TOfferInfo = OfferPrevType & {
+  // id: string;
+  // title: string;
+  // type: string;
+  // price: number;
+  // city: OfferCity;
+  // location: OfferLocation;
+  // isFavorite: boolean;
+  // isPremium: boolean;
+  // rating: number;
+
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: OfferHost;
+  images: string[];
+  maxAdults: number;
 };

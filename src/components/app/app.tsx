@@ -7,17 +7,15 @@ import FavoritePage from '../../pages/favorites-page/favorite-page';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute } from '../../common/const';
 import { useAppSelector } from '../../hooks';
-import { ReviewType } from '../../types/review';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { OfferType } from '../../types/offer';
 
 type AppProps = {
   offers: OfferType[];
-  reviews: ReviewType[];
 }
 
-function App({ offers, reviews }: AppProps): JSX.Element {
+function App({ offers}: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <HelmetProvider>
@@ -25,7 +23,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage offers={offers} />}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -34,10 +32,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
           <Route
             path={`${AppRoute.Offer}/:offerId`}
             element={
-              <OfferPage
-                offers={offers}
-                reviews={reviews}
-              />
+              <OfferPage />
             }
           />
           <Route

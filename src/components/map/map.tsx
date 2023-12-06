@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { OfferType } from '../../types/offer';
+import { OfferPrevType } from '../../types/offer';
 import { OfferLocation } from '../../types/offer-location';
 import useMap from '../../hooks/use-map';
 
@@ -17,8 +17,8 @@ type IconConfig = {
 type MapProps = {
   block: string;
   location: OfferLocation;
-  offers: OfferType[];
-  specialOfferId: OfferType['id'] | null;
+  offers: OfferPrevType[];
+  specialOfferId: OfferPrevType['id'] | null;
 };
 
 const defaultIcon: IconConfig = {

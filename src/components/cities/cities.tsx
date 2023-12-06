@@ -1,24 +1,26 @@
-import { OfferType } from '../../types/offer';
+import {OfferPrevType } from '../../types/offer';
 import Card from '../../components/card/card';
 import { useState } from 'react';
 import Map from '../map/map';
 import Spinner from '../spinner/spinner';
-import { CitiesLocation } from '../../common/const';
 import { useAppSelector } from '../../hooks';
 import Sorting from '../sorting/sorting';
+import MainEmpty from '../../pages/main-page/main-page-empty';
 
-type CitiesProps = {
-  offers: OfferType[];
-}
 
-function Cities({ offers }: CitiesProps) {
-  const [hoveredOfferId, setHoveredOfferId] = useState<OfferType['id'] | null>(null);
-  const activeCity = CitiesLocation.Amsterdam;
+function Cities() {
+  const [hoveredOfferId, setHoveredOfferId] = useState<OfferPrevType['id'] | null>(null);
   const currentCity = useAppSelector((state) => state.activeCity);
   const currentOffers = useAppSelector((state) => state.currentOffers);
   const loadedStatus = useAppSelector((state) => state.loadedStatus);
-  function handleCardHover(offerId: OfferType['id'] | null) {
+  function handleCardHover(offerId: OfferPrevType['id'] | null) {
     setHoveredOfferId(offerId);
+  }
+
+  if (loadedStatus && !currentOffers.length) {
+    return (
+      <MainEmpty currentCity={currentCity}/>
+    );
   }
 
   return (
@@ -28,7 +30,7 @@ function Cities({ offers }: CitiesProps) {
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
           <Sorting />
-          { !loadedStatus && <Spinner /> }
+          {!loadedStatus && <Spinner />}
           <div className="cities__places-list places__list tabs__content">
             {currentOffers.map((offer) => (
               <Card key={offer.id} block='cities' offer={offer} onCardHover={handleCardHover} />
@@ -37,13 +39,13 @@ function Cities({ offers }: CitiesProps) {
         </section>
         <div className="cities__right-section">
           <section className="cities__map map">
-            <Map
-              location={activeCity.location}
-              block='cities'
-              // Поменять на currentOffers
-              offers={offers}
-              specialOfferId={hoveredOfferId}
-            />
+            {currentOffers.length &&
+              <Map
+                location={currentOffers[0].city.location}
+                block='cities'
+                offers={currentOffers}
+                specialOfferId={hoveredOfferId}
+              />}
           </section>
         </div>
       </div>

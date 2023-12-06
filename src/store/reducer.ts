@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { OfferPrevType } from '../types/offer';
+import { OfferPrevType, TOfferInfo } from '../types/offer';
 import { TCityName, AuthorizationStatus } from '../common/const';
 // import { offers } from '../mocks/offers';
 import { TSorting } from '../types/sorting';
 import { getSorting } from '../common/common';
 import { TUserData } from '../types/user-data';
 
-import { cityChange, citySorting, loadOffers, requireAuthorization, serverError, offersLoading, userInfo } from './action';
+import { cityChange, citySorting, loadOffers,
+  requireAuthorization, serverError, offersLoading, userInfo, offerInfoLoading } from './action';
 
 const initialState: {
   offers: OfferPrevType[] | [];
@@ -16,7 +17,9 @@ const initialState: {
   authorizationStatus: AuthorizationStatus;
   loadedStatus: boolean;
   serverError: string | null;
+  isOffersLoading: boolean;
   userInfo: TUserData;
+  offerInfo: TOfferInfo | null;
 } = {
   offers: [],
   activeCity: 'Paris',
@@ -25,13 +28,15 @@ const initialState: {
   authorizationStatus: AuthorizationStatus.Unknown,
   loadedStatus: false,
   serverError: null,
+  isOffersLoading: true,
   userInfo: {
     name: '',
     avatarUrl: '',
     email: '',
     isPro: false,
     token: '',
-  }
+  },
+  offerInfo: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -46,11 +51,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
-      state.loadedStatus = true;
       state.currentOffers = state.offers.filter((offer) => offer.city.name === state.activeCity);
+      state.loadedStatus = true;
     })
     .addCase(offersLoading, (state, action) => {
-      state.loadedStatus = action.payload;
+      state.isOffersLoading = action.payload;
+      state.loadedStatus = true;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
@@ -60,6 +66,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(userInfo, (state, action) => {
       state.userInfo = action.payload;
+    })
+    .addCase(offerInfoLoading, (state, action) => {
+      state.offerInfo = action.payload;
     });
 
 });
