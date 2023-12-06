@@ -1,7 +1,6 @@
 import { MAX_RATING } from './const';
 import { OfferPrevType } from '../types/offer';
 import { TSorting } from '../types/sorting';
-// import { offers } from '../mocks/offers';
 
 function capitalize(value: string) {
   return value[0].toUpperCase() + value.slice(1);

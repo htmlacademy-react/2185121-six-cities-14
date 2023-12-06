@@ -5,10 +5,11 @@ import { Provider } from 'react-redux/es/exports';
 import { offers } from './mocks/offers';
 import ErrorMessage from './components/error-message/error-message';
 import { store } from './store';
-import { fetchOffersAction, checkAuthAction } from './api-actions/api-actions';
+import { fetchOffersAction, checkAuthAction , fetchOffersFavoriteAction} from './api-actions/api-actions';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersFavoriteAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

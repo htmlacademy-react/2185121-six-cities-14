@@ -1,16 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferPrevType, TOfferInfo } from '../types/offer';
 import { TCityName, AuthorizationStatus } from '../common/const';
-// import { offers } from '../mocks/offers';
 import { TSorting } from '../types/sorting';
 import { getSorting } from '../common/common';
 import { TUserData } from '../types/user-data';
 
 import { cityChange, citySorting, loadOffers,
-  requireAuthorization, serverError, offersLoading, userInfo, offerInfoLoading } from './action';
+  requireAuthorization, serverError, offersLoading, userInfo, offerInfoLoading, loadFavoriteOffers } from './action';
 
 const initialState: {
   offers: OfferPrevType[] | [];
+  favoritesOffers:OfferPrevType[] | [];
   activeCity: TCityName;
   currentOffers:OfferPrevType[] | [];
   activeSorting: TSorting;
@@ -22,6 +22,7 @@ const initialState: {
   offerInfo: TOfferInfo | null;
 } = {
   offers: [],
+  favoritesOffers: [],
   activeCity: 'Paris',
   currentOffers: [],
   activeSorting: 'Popular',
@@ -69,6 +70,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(offerInfoLoading, (state, action) => {
       state.offerInfo = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoritesOffers = action.payload;
     });
 
 });

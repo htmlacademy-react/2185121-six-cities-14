@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { TState, TAppDispatch } from '../types/state';
 import { APIRoute, AuthorizationStatus} from '../common/const';
-import { loadOffers, requireAuthorization, userInfo, offerInfoLoading, offersLoading } from '../store/action';
+import { loadOffers, requireAuthorization, userInfo, offerInfoLoading, offersLoading, loadFavoriteOffers } from '../store/action';
 import { OfferPrevType, TOfferInfo } from '../types/offer'; //доделать норм типизацию
 import { AuthData } from '../types/auth-data';
 import { TUserData } from '../types/user-data';
@@ -21,6 +21,22 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
       dispatch(loadOffers(data));
     } catch {
       dispatch(offersLoading(true));
+    }
+  }
+);
+
+export const fetchOffersFavoriteAction = createAsyncThunk<void, undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<OfferPrevType[]>(APIRoute.Favorites);
+      dispatch(loadFavoriteOffers(data));
+    } catch {
+      dispatch(offersLoading(true));// переделать под избранные офферы
     }
   }
 );

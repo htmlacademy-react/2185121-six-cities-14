@@ -52,8 +52,8 @@ function OfferPage() {
 
   const sendComment = (comment: ReviewSendType) => {
     (async () => {
-      const {data} = await api.post<ReviewType[]>(`${APIRoute.Comments}/${id}`, comment);
-      setComments(data);
+      const {data} = await api.post<ReviewType>(`${APIRoute.Comments}/${id}`, comment);
+      setComments((currentComments) => [...currentComments, data]);
     })();
   };
 
