@@ -57,9 +57,6 @@ function OfferPage() {
     })();
   };
 
-  // const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
-  //этот кусок кода нужен для добавления функционала в будущем
-
 
   if (offer?.id) {
 

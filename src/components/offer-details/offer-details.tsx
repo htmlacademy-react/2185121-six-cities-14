@@ -2,11 +2,15 @@ import { TOfferInfo } from '../../types/offer';
 import { capitalize, getRatingWidth } from '../../common/common';
 import ReviewsList from '../reviews-list/review-list';
 import { ReviewType, ReviewSendType } from '../../types/review';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeOffersFavoriteStatus } from '../../api-actions/api-actions';
+import { useNavigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../common/const';
 
 type OfferDetailsProps = {
   offer: TOfferInfo;
   reviews: ReviewType[];
-  sendComment:(review: ReviewSendType) => void;
+  sendComment: (review: ReviewSendType) => void;
 }
 
 function OfferDetails({ offer, reviews, sendComment }: OfferDetailsProps) {
@@ -23,6 +27,13 @@ function OfferDetails({ offer, reviews, sendComment }: OfferDetailsProps) {
     goods,
     host,
   } = offer;
+
+  const isFavorite = useAppSelector((state) => state.favoritesOffers)?.find((favoriteOffer) => favoriteOffer.id === offer.id);
+
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="offer__gallery-container container">
@@ -45,7 +56,17 @@ function OfferDetails({ offer, reviews, sendComment }: OfferDetailsProps) {
           </div>
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{title}</h1>
-            <button className="offer__bookmark-button button" type="button">
+            <button
+              className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : null}`}
+              type="button"
+              onClick={() => {
+                if (authStatus === AuthorizationStatus.NoAuth) {
+                  navigate('/login');
+                } else {
+                  dispatch(changeOffersFavoriteStatus({id: offer.id, isFavorite: Number(!isFavorite)}));
+                }
+              }}
+            >
               <svg className="offer__bookmark-icon" width={31} height={33}>
                 <use xlinkHref="#icon-bookmark" />
               </svg>
