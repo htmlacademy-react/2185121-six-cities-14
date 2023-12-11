@@ -1,5 +1,6 @@
 import { ReviewType } from '../../types/review';
 import { getRatingWidth } from '../../common/common';
+import { monthName } from './review.const';
 
 type ReviewProps = {
   review: ReviewType;
@@ -31,7 +32,7 @@ function Review({review}: ReviewProps) {
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>
-          {date}
+          {`${monthName[new Date(date).getMonth()]} ${new Date(date).getFullYear()}`}
         </time>
       </div>
     </li>

@@ -13,3 +13,4 @@ export const offersLoading = createAction<boolean>('offersLoading');
 export const userInfo = createAction<TUserData>('user/info');
 export const offerInfoLoading = createAction<TOfferInfo>('offer/info');
 export const loadFavoriteOffers = createAction<OfferPrevType[]>('offer/favorites');
+export const changeOfferStatus = createAction<TOfferInfo>('offer/status');

@@ -1,12 +1,14 @@
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import { loginAction } from '../../api-actions/api-actions';
+import { AuthorizationStatus } from '../../common/const';
 
 function LoginPage() {
   const city = useAppSelector((state) => state.activeCity);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -29,6 +31,12 @@ function LoginPage() {
         });
     }
   };
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate('/');
+    }
+  },[authStatus, navigate]);
 
   return (
     <div className="page page--gray page--login">

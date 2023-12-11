@@ -5,18 +5,30 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritePage from '../../pages/favorites-page/favorite-page';
 
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute } from '../../common/const';
-import { useAppSelector } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../common/const';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { OfferType } from '../../types/offer';
+import Spinner from '../spinner/spinner';
+import { useEffect } from 'react';
+import { fetchOffersAction, checkAuthAction, fetchOffersFavoriteAction } from '../../api-actions/api-actions';
 
-type AppProps = {
-  offers: OfferType[];
-}
 
-function App({ offers}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+    dispatch(checkAuthAction());
+    dispatch(fetchOffersFavoriteAction());
+  }, [dispatch, authorizationStatus]);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return <Spinner />;
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -41,7 +53,7 @@ function App({ offers}: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <FavoritePage offers={offers} />
+                <FavoritePage />
               </PrivateRoute>
             }
           />

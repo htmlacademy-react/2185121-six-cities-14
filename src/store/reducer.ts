@@ -1,26 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { OfferPrevType, TOfferInfo } from '../types/offer';
-import { TCityName, AuthorizationStatus } from '../common/const';
-import { TSorting } from '../types/sorting';
+import { AuthorizationStatus } from '../common/const';
 import { getSorting } from '../common/common';
-import { TUserData } from '../types/user-data';
+import { TInitialState } from '../types/inital-state';
 
 import { cityChange, citySorting, loadOffers,
-  requireAuthorization, serverError, offersLoading, userInfo, offerInfoLoading, loadFavoriteOffers } from './action';
+  requireAuthorization, serverError, offersLoading, userInfo, offerInfoLoading, loadFavoriteOffers, changeOfferStatus } from './action';
 
-const initialState: {
-  offers: OfferPrevType[] | [];
-  favoritesOffers:OfferPrevType[] | [];
-  activeCity: TCityName;
-  currentOffers:OfferPrevType[] | [];
-  activeSorting: TSorting;
-  authorizationStatus: AuthorizationStatus;
-  loadedStatus: boolean;
-  serverError: string | null;
-  isOffersLoading: boolean;
-  userInfo: TUserData;
-  offerInfo: TOfferInfo | null;
-} = {
+const initialState: TInitialState = {
   offers: [],
   favoritesOffers: [],
   activeCity: 'Paris',
@@ -73,6 +59,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoritesOffers = action.payload;
+    })
+    .addCase(changeOfferStatus, (state, action) => {
+      state.offers = state.offers.map((offer) => ({
+        ...offer,
+        isFavorite: offer.id === action.payload.id ? action.payload.isFavorite : offer.isFavorite,
+      }));
+      state.currentOffers = state.offers.filter((offer) => offer.city.name === state.activeCity);
     });
 
 });

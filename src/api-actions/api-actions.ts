@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { TState, TAppDispatch } from '../types/state';
 import { APIRoute, AuthorizationStatus} from '../common/const';
-import { loadOffers, requireAuthorization, userInfo, offerInfoLoading, offersLoading, loadFavoriteOffers } from '../store/action';
-import { OfferPrevType, TOfferInfo } from '../types/offer'; //доделать норм типизацию
+import { loadOffers, requireAuthorization, userInfo, offerInfoLoading, offersLoading, loadFavoriteOffers, changeOfferStatus } from '../store/action';
+import { OfferPrevType, TOfferInfo } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { TUserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
@@ -36,10 +36,25 @@ export const fetchOffersFavoriteAction = createAsyncThunk<void, undefined, {
       const {data} = await api.get<OfferPrevType[]>(APIRoute.Favorites);
       dispatch(loadFavoriteOffers(data));
     } catch {
-      dispatch(offersLoading(true));// переделать под избранные офферы
+      dispatch(loadFavoriteOffers([]));
+      dispatch(offersLoading(true));
     }
   }
 );
+
+export const changeOffersFavoriteStatus = createAsyncThunk<void, {id: string; isFavorite: number}, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffers',
+  async ({isFavorite, id}, {dispatch, extra: api}) => {
+    const {data} = await api.post<TOfferInfo>(`${APIRoute.Favorites}/${id}/${isFavorite}`);
+    await dispatch(fetchOffersFavoriteAction());
+    dispatch(changeOfferStatus(data));
+  }
+);
+
 
 export const fetchOfferInfoAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
